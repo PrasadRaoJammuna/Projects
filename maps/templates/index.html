@@ -1,0 +1,56 @@
+
+{% load leaflet_tags %}
+{% load  static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maps</title>
+    {% leaflet_js %}
+
+    {% leaflet_css %}
+
+    <style>
+        #gis {width:100%;height:800px;}
+        </style>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container"><br>
+    <h1 class="text-center">Weather Data</h1>
+
+    <button class="btn btn-success mb-3"> <a href="{% url 'data' %}" class="text-white">Add City</a></button>
+
+    <script type="text/javascript">
+    
+        function out_layers(map,options) {
+           
+          
+            var points = new L.GeoJSON.AJAX( "{% url 'citydata' %}",{
+                onEachFeature: function(feature,layer){ 
+                    
+                    layer.bindTooltip(feature.properties.humidity.toString());
+                    layer.bindPopup(feature.properties.temperature.toString());
+					
+                }
+
+            });
+
+         points.addTo(map);
+
+        };
+
+    </script>
+    
+    {% leaflet_map "gis"  callback="window.out_layers" %} 
+    
+
+    <script type="text/Javascript" src="{% static 'js/leaflet.ajax.js' %}"></script>
+    <script type="text/Javascript" src="{% static 'js/leaflet.ajax.min.js' %}"></script>
+
+    
+</div>
+    
+</body>
+</html>
