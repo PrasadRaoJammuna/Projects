@@ -3,7 +3,7 @@ astroid==2.4.2
 certifi==2020.6.20
 chardet==3.0.4
 colorama==0.4.3
-Django==2.0
+Django==2.2.13
 django-leaflet==0.26.0
 idna==2.10
 isort==4.3.21
